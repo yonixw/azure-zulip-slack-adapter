@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     return next();
 })
 
-app.get('/temp',(req,res)=>{
+app.get('*/temp',(req,res)=>{
   let result = fs.readFileSync('temp.json',{encoding: "utf8"}).toString();
   res.set("content-type","text/plain")
   res.send(result);
