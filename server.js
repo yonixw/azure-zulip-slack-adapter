@@ -26,12 +26,10 @@ app.use((req, res, next) => {
 app.get('/temp',(req,res)=>{
   let result = fs.readFileSync('temp.json',{encoding: "utf8"}).toString();
   res.set("content-type","text/plain")
-  console.log(result);
   res.send(result);
 })
 
 app.post('*', (req, res)=>{
-    console.log(req.url);
     fs.writeFileSync("temp.json", JSON.stringify(req.body))
     let result = converter(req.body);
 
