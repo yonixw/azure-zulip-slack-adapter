@@ -63,7 +63,8 @@ function convert(input, filter = "") {
 
     try {
         let keyFilter = JSON.parse('[' + filter + ']');
-        keys = keyFilter.map((i)=>keys[i]);
+        if (keyFilter.length > 0)
+            keys = keyFilter.map((i)=>keys[i]);
     }
     catch (e) {
         console.log ("Error getting filter for json from :'" + filter + "'");

@@ -58,7 +58,7 @@ app.get('*/temp.txt',(req,res)=>{
 
 app.post('/json/*', (req, res)=>{
   const new_url = domain + req.url.replace("json/", "");
-  const converter_opt = {"filter": req.query.filter || ""};
+  const converter_opt = req.query.filter || "";
   
   handleConvert(req,res, json_converter, new_url ,converter_opt);
 })
