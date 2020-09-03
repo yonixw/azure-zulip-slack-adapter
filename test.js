@@ -1,39 +1,37 @@
-let input=    
-{
-    "text": "Text 1",
-    "blocks": [
-        {"type":"section","text":{"type":"mrkdwn","text":"Existing **text**!!"}}
-    ],
-    "attachments": [
-    {
-      "color": "good",
-      "fields": [
-        {
-          "title": "Requested by",
-          "value": "Normal Paulk",
-          "short": true
-        },
-        {
-          "title": "Duration",
-          "value": "00:02:03",
-          "short": true
-        },
-        {
-          "title": "Build pipeline",
-          "value": "ConsumerAddressModule",
-          "short": true
-        }
-      ],
-      "pretext": "Build <https://fabrikam-fiber-inc.visualstudio.com/web/build.aspx?pcguid=5023c10b-bef3-41c3-bf53-686c4e34ee9e&builduri=vstfs%3a%2f%2f%2fBuild%2fBuild%2f3|ConsumerAddressModule_20150407.2> succeeded",
-      "mrkdwn_in": [
-        "pretext"
-      ],
-      "fallback": "Build ConsumerAddressModule_20150407.2 succeeded"
-    }
-  ]
+const fs = require('fs');
+const fetch = require('node-fetch');
+
+const url = fs.readFileSync("test_url.txt",{encoding: "utf-8"});
+
+const azure_converter = require("./converters/azure")
+const json_converter = require("./converters/json")
+
+const azure_input = JSON.parse(fs.readFileSync('./test-cases/azure_devops.json'))
+const bitrise_input = JSON.parse(fs.readFileSync('./test-cases/bitrise_slack_step.json'))
+const appcenter_input = JSON.parse(fs.readFileSync('./test-cases/appcenter_new_release.json'))
+
+const test_pairs = [
+  [azure_converter, azure_input,null],
+  [azure_converter, bitrise_input,null],
+  [json_converter, appcenter_input, "0,3,7,10,11,15,17,18,19,20"]
+]
+
+async function fetchAll() {
+  for (let i = 0; i < test_pairs.length; i++) {
+    const e = test_pairs[i];
+    console.log("========= Sending input #" + i);
+
+    const result = JSON.stringify(e[0](e[1],e[2]),null,4);
+    console.log(result);
+
+    await fetch(url, {method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: result
+    })
+  }
 }
 
-let convertor = require("./lib");
-let result = convertor(input);
+fetchAll().then(()=>console.log("[DONE]"))
 
-console.log(JSON.stringify(result, null, 4));
+
+

@@ -1,0 +1,23 @@
+{
+    "app_name": "$APPNAM$",
+    "app_display_name": "$APPNAM$",
+    "release_id": "5",
+    "platform": "$PLATFORM$",
+    "uploaded_at": "2020-09-02T13:35:29.352Z",
+    "fingerprint": "$HASH$",
+    "release_notes": "",
+    "version": "34",
+    "short_version": "$VERSION$",
+    "min_os": "12.0",
+    "mandatory_update": true,
+    "size": 12719729,
+    "provisioning_profile_name": "$PLATFORM$ Team Provisioning Profile: $BUNDLE_NAME$",
+    "provisioning_profile_type": "$PROFILE_TYPE$",
+    "bundle_identifier": "$BUNDLE_NAME$",
+    "install_link": "https://install.appcenter.ms/orgs/$ORGANIZATION$/apps/$APPNAM$/releases/5?source=email",
+    "icon_link": "https://appcenter-filemanagement-distrib1XXXXX.azureedge.net/............",
+    "distribution_group_id": "$GROUP_HASH_ID$",
+    "installable": true,
+    "sent_at": "2020-09-02T13:36:32.7559248Z",
+    "app_id": "$APP_HASH_ID$"
+}

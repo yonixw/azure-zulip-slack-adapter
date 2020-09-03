@@ -1,16 +1,16 @@
 const express = require('express')
-const converter = require("./lib")
 const { json } = require('body-parser')
 const fetch = require('node-fetch');
 const fs = require('fs');
 
+const azure_converter = require("./converters/azure")
+const json_converter = require("./converters/json")
 
 const app = express()
 
 const port = 3000
 const domain = process.env.DOMAIN || "localhost"
-const code = process.env.CODE || "process"
-console.log("Domain: '" + domain +  "', Code: '" + code +  "'");
+console.log("Domain: '" + domain +  "'");
 
 app.use(express.json({limit: '5mb'}));
 app.use(express.urlencoded({limit: '5mb'}));
@@ -23,28 +23,56 @@ app.use((req, res, next) => {
     return next();
 })
 
-app.get('*/temp',(req,res)=>{
+function handleConvert(req,res, converter, new_url, converter_opt) {
+  fs.writeFileSync("temp.json", JSON.stringify(req.body));
+  let result = converter(req.body,converter_opt);
+
+  fetch(new_url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(result)
+  })
+    .then(r => r.text())
+    .then(text => res.send(text))
+    .catch(e => res.send(e));
+}
+
+app.post('/', (req, res) => {
+  res.send("OK-POST");
+});
+
+app.GET('/', (req, res) => {
+  res.send("OK-GET");
+});
+
+
+
+app.get('*/temp.txt',(req,res)=>{
   let result = fs.readFileSync('temp.json',{encoding: "utf8"}).toString();
   res.set("content-type","text/plain")
   res.send(result);
 })
 
-app.post('*', (req, res)=>{
-    fs.writeFileSync("temp.json", JSON.stringify(req.body))
-    let result = converter(req.body);
 
-    fetch(domain + req.url.replace("/" + code , ""), {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(result)
-    })
-        .then(r => r.text())
-        .then(text => res.send(text))
-        .catch(e=> res.send(e))
+app.post('/botc/json/*', (req, res)=>{
+  const new_url = domain + req.url.replace("botc/json/", "");
+  const converter_opt = {"filter": req.query.filter || ""};
+
+  console.log("Redirect to Sending to '" + new_url + "'");
+  handleConvert(req,res, json_converter, new_url ,converter_opt);
 })
+
+app.post('/botc/azure/*', (req, res)=>{
+    const new_url = domain + req.url.replace("botc/azure/", "");
+    console.log("Redirect to Sending to '" + new_url + "'");
+    handleConvert(req,res, azure_converter, new_url);
+})
+
 
 
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+

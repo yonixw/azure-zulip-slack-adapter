@@ -1,0 +1,33 @@
+{
+    "text": "Text 1",
+    "blocks": [
+        {"type":"section","text":{"type":"mrkdwn","text":"Existing **text**!!"}}
+    ],
+    "attachments": [
+    {
+      "color": "good",
+      "fields": [
+        {
+          "title": "Requested by",
+          "value": "Normal Paulk",
+          "short": true
+        },
+        {
+          "title": "Duration",
+          "value": "00:02:03",
+          "short": true
+        },
+        {
+          "title": "Build pipeline",
+          "value": "ConsumerAddressModule",
+          "short": true
+        }
+      ],
+      "pretext": "Build <https://fabrikam-fiber-inc.visualstudio.com/web/build.aspx?pcguid=5023c10b-bef3-41c3-bf53-686c4e34ee9e&builduri=vstfs%3a%2f%2f%2fBuild%2fBuild%2f3|ConsumerAddressModule_20150407.2> succeeded",
+      "mrkdwn_in": [
+        "pretext"
+      ],
+      "fallback": "Build ConsumerAddressModule_20150407.2 succeeded"
+    }
+  ]
+}

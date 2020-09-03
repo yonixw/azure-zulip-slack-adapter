@@ -1,0 +1,44 @@
+{
+    "channel": "devops-ios",
+    "attachments": [
+        {
+            "fallback": "",
+            "color": "#3bc3a3",
+            "pretext": "*Build Succeeded!*",
+            "author_name": "GIT AUTHER",
+            "title": "Update .gitignore",
+            "fields": [
+                {
+                    "short": true,
+                    "title": "App",
+                    "value": "<APP NAME>"
+                },
+                {
+                    "short": true,
+                    "title": "Branch",
+                    "value": "master"
+                },
+                {
+                    "short": true,
+                    "title": "Workflow",
+                    "value": "primary"
+                },
+                {
+                    "short": false,
+                    "title": "View App",
+                    "value": "https://app.bitrise.io/app/55a0e8XXXXXXXXX"
+                },
+                {
+                    "short": false,
+                    "title": "View Build",
+                    "value": "https://app.bitrise.io/build/3e599XXXXXXXX"
+                }
+            ],
+            "footer": "Bitrise",
+            "ts": 1599122175
+        }
+    ],
+    "icon_emoji": ":+1:",
+    "link_names": true,
+    "username": "Bitrise"
+}
