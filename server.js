@@ -24,6 +24,8 @@ app.use((req, res, next) => {
 })
 
 function handleConvert(req,res, converter, new_url, converter_opt) {
+  console.log("Redirect to Sending to '" + new_url + "'");
+
   fs.writeFileSync("temp.json", JSON.stringify(req.body));
   let result = converter(req.body,converter_opt);
 
@@ -54,17 +56,16 @@ app.get('*/temp.txt',(req,res)=>{
 })
 
 
-app.post('/botc/json/*', (req, res)=>{
-  const new_url = domain + req.url.replace("botc/json/", "");
+app.post('/json/*', (req, res)=>{
+  const new_url = domain + req.url.replace("json/", "");
   const converter_opt = {"filter": req.query.filter || ""};
-
-  console.log("Redirect to Sending to '" + new_url + "'");
+  
   handleConvert(req,res, json_converter, new_url ,converter_opt);
 })
 
-app.post('/botc/azure/*', (req, res)=>{
-    const new_url = domain + req.url.replace("botc/azure/", "");
-    console.log("Redirect to Sending to '" + new_url + "'");
+app.post('/azure/*', (req, res)=>{
+    const new_url = domain + req.url.replace("azure/", "");
+
     handleConvert(req,res, azure_converter, new_url);
 })
 
