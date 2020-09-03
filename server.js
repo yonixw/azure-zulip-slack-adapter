@@ -43,7 +43,7 @@ app.post('/', (req, res) => {
   res.send("OK-POST");
 });
 
-app.GET('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send("OK-GET");
 });
 
